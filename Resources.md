@@ -1,0 +1,2 @@
+- https://github.com/Vishavjeet6/awesome-copilot-instructions/
+- https://www.reddit.com/r/ChatGPTCoding/comments/1jl6gll/copilotinstructionsmd_has_helped_me_so_much/
