@@ -11,6 +11,7 @@ For every request with actions (e.g. not just a simple question) take the follow
 ## Tech
 
 - npm based project for ease of dependency management
+- vite for dev server and build tool
 - Built using html5 canvas and typescript
 - Utilizing zod for data structures and validation
 - utilizing zustand for state management
