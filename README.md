@@ -5,7 +5,3 @@ A single level metroidvania-esque shooter. You play as a lone warrior trapped in
 ## Gameplay
 
 - Inspired by Zelda II, the game engine resembles a platformer with a camera such that the player can move left and right (so long as there is a path) and jump their way into the sky (so long as there is platforms or ladders to allow for it.)
-
-## Tech
-
-- Built using html5 canvas and typescript

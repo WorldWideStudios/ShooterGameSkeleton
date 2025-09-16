@@ -8,6 +8,14 @@ For every request with actions (e.g. not just a simple question) take the follow
 2. **Present plan** - Present the plan as the series of steps asking for any feedback
 3. **Present final plan** - After taking in feedback update plan if needed and always ask for confirmation before beginning work.
 
+## Tech
+
+- npm based project for ease of dependency management
+- Built using html5 canvas and typescript
+- Utilizing zod for data structures and validation
+- utilizing zustand for state management
+- phaser for game engine
+
 # Project general coding standards
 
 - Comment all code with a tsdoc. This should include an in depth description of what the function, type or bit of code does.
@@ -65,9 +73,6 @@ For every request with actions (e.g. not just a simple question) take the follow
     Follow this structured directory layout:
 
     	project-root/
-    	├── api/                  # API handlers and routes
-    	├── config/               # Configuration files and environment variables
-    	├── data/                 # JSON files, and other storage
     	├── public/               # Publicly accessible files (served by web server)
     	│   ├── assets/
     	│   │   ├── css/
@@ -78,10 +83,8 @@ For every request with actions (e.g. not just a simple question) take the follow
     	├── src/                  # Application source code
     	│   ├── helpers/
     	│   ├── models/ # for zod schemas and their derived types
-    	├── tests/                # Unit and integration tests
-    	├── docs/                 # Documentation (Markdown files)
+        │   ├── tests/ # for zod schemas and their derived types
     	├── scripts/              # Scripts for deployment, setup, etc.
-    	└── temp/                 # Temporary/cache files
 
 ## Documentation Requirements
 
