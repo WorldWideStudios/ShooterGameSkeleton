@@ -32,6 +32,7 @@ For every request with actions (e.g. not just a simple question) take the follow
 ## Phaser Requirements
 
     - Remember that phaser types are included, don't try and install a types package
+    - Use phaser 3 or higher for all code, and ensure that all code is compatible with the latest stable release of phaser 3
 
 ## JavaScript Requirements
 
