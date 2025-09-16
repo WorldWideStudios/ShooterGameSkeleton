@@ -1,6 +1,6 @@
-import Phaser from 'phaser';
-import { PLAYER_RIGHT } from '../lib/sprites';
-import { extractSprite } from './extractSprite';
+import Phaser from "phaser";
+import { PLAYER_RIGHT } from "../lib/sprites";
+import { extractSprite } from "./extractSprite";
 
 /**
  * Player actor class for the main character.

@@ -19,7 +19,7 @@ class BallScene extends Phaser.Scene {
    * Loads the player sprite image.
    */
   preload(): void {
-    this.load.image('assets/jules.png', 'assets/jules.png');
+    this.load.image("assets/jules.png", "assets/jules.png");
   }
 
   /**
@@ -33,7 +33,7 @@ class BallScene extends Phaser.Scene {
     // Add the player actor at the center
     // Import Player class
     // @ts-ignore
-    import('./helpers/player').then(({ Player }) => {
+    import("./helpers/player").then(({ Player }) => {
       new Player(this, centerX, centerY);
     });
   }

@@ -9,5 +9,5 @@ export const PLAYER_RIGHT = {
   /** Bottom-right x, y coordinates of the sprite in the sheet */
   bottomRight: [83, 144],
   /** Path to the spritesheet image */
-  imagePath: 'assets/jules.png',
+  imagePath: "assets/jules.png",
 };

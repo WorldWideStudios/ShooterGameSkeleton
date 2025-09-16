@@ -1,5 +1,5 @@
-import Phaser from 'phaser';
-import { PLAYER_RIGHT } from '../lib/sprites';
+import Phaser from "phaser";
+import { PLAYER_RIGHT } from "../lib/sprites";
 
 /**
  * Extracts a sprite from a spritesheet using Phaser's built-in methods.
@@ -28,7 +28,9 @@ export function extractSprite(
    * Here, we assume the image is already loaded and available in the texture manager.
    */
   if (!scene.textures.exists(imagePath)) {
-    throw new Error(`Texture ${imagePath} not loaded. Please load it in the scene's preload method.`);
+    throw new Error(
+      `Texture ${imagePath} not loaded. Please load it in the scene's preload method.`
+    );
   }
 
   // Add the image to the scene at the correct position and crop to the sprite region
