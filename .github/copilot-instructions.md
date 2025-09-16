@@ -29,6 +29,10 @@ For every request with actions (e.g. not just a simple question) take the follow
     - Firefox, Chrome, Edge, Safari (macOS/iOS)
         - Emphasize progressive enhancement with polyfills or bundlers (e.g., **Babel**, **Vite**) as needed.
 
+## Phaser Requirements
+
+    - Remember that phaser types are included, don't try and install a types package
+
 ## JavaScript Requirements
 
     - **Minimum Compatibility**: ECMAScript 2020 (ES11) or higher
@@ -74,18 +78,12 @@ For every request with actions (e.g. not just a simple question) take the follow
     Follow this structured directory layout:
 
     	project-root/
-    	├── public/               # Publicly accessible files (served by web server)
-    	│   ├── assets/
-    	│   │   ├── css/
-    	│   │   ├── js/
-    	│   │   ├── images/
-    	│   │   ├── fonts/
-    	│   └── index.html
     	├── src/                  # Application source code
     	│   ├── helpers/
     	│   ├── models/ # for zod schemas and their derived types
         │   ├── tests/ # for zod schemas and their derived types
     	├── scripts/              # Scripts for deployment, setup, etc.
+        ├── index.html
 
 ## Documentation Requirements
 
