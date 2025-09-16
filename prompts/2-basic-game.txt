@@ -1,2 +1,0 @@
-implement a basic structure of this project with a single ball that can move left and right, and 2-3 platforms going up to 
-demonstrate that the camera can move upward (and that there is gravity that will bring the player down if they fall)
