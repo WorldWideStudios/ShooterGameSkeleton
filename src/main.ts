@@ -15,15 +15,27 @@ class BallScene extends Phaser.Scene {
   }
 
   /**
+   * Preload assets for the scene.
+   * Loads the player sprite image.
+   */
+  preload(): void {
+    this.load.image('assets/jules.png', 'assets/jules.png');
+  }
+
+  /**
    * Called once when the scene is created.
-   * Draws a red circle in the center of the canvas.
+   * Adds the player sprite in the center of the canvas.
    */
   create(): void {
     // Get center coordinates from main camera
     const centerX = this.cameras.main.width / 2;
     const centerY = this.cameras.main.height / 2;
-    // Draw a red circle in the center
-    this.add.circle(centerX, centerY, 50, 0xff0000);
+    // Add the player actor at the center
+    // Import Player class
+    // @ts-ignore
+    import('./helpers/player').then(({ Player }) => {
+      new Player(this, centerX, centerY);
+    });
   }
 }
 
