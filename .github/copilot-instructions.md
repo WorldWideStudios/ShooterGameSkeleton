@@ -33,6 +33,9 @@ For every request with actions (e.g. not just a simple question) take the follow
 
     - Remember that phaser types are included, don't try and install a types package
     - Use phaser 3 or higher for all code, and ensure that all code is compatible with the latest stable release of phaser 3
+    - Be sure to use phasers recommended functions for manipulating sprites, images, sounds and any other assets
+    - Never use custom canvas logic unless absolutely necessary, always prefer phasers built in functions
+    - Use phasers built in game loop and scene management, never try and create your own
 
 ## JavaScript Requirements
 
