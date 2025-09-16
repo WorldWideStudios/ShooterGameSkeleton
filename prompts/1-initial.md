@@ -7,3 +7,4 @@ Acceptance criteria:
 2. Upon running we should have a page with a blank (white) background and a centered canvas
 3. The canvas should have a black background, and utilize phaser to draw a red circle in the center of the canvas
 4. Ensure compatibility with vite (keep files in the correct location to be ran e.g. index.html not in public but top level)
+   - be 100% sure that vite will run, leave no chance of a misconfig or bad file placement/structure
