@@ -24,3 +24,21 @@ export const PLAYER_LEFT = {
   imagePath: "assets/jules.png",
   mirrored: true, // Used to indicate this should be mirrored in rendering logic
 };
+
+/**
+ * Mirrors a Phaser sprite horizontally by setting scaleX to -1.
+ * Usage: Call this on the sprite instance if its config has `mirrored: true`.
+ * @param sprite - The Phaser.GameObjects.Sprite instance
+ * @author GitHub Copilot
+ */
+/**
+ * Mirrors a Phaser sprite or image horizontally by setting scaleX to -1.
+ * Accepts both Sprite and Image types.
+ * @param sprite - The Phaser.GameObjects.Sprite or Image instance
+ * @author GitHub Copilot
+ */
+export function mirror(
+  sprite: Phaser.GameObjects.Sprite | Phaser.GameObjects.Image
+): void {
+  sprite.setScale(-1, 1);
+}

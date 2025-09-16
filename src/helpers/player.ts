@@ -1,6 +1,6 @@
 import Phaser from "phaser";
-import { PLAYER_RIGHT, PLAYER_LEFT } from "../lib/sprites";
-import { extractSprite, mirrorSprite } from "./extractSprite";
+import { PLAYER_RIGHT, PLAYER_LEFT, mirror } from "../lib/sprites";
+import { extractSprite } from "./extractSprite";
 
 /**
  * Player actor class for the main character.
@@ -53,9 +53,9 @@ export class Player extends Phaser.GameObjects.Container {
   setDirection(dir: "left" | "right") {
     if (this.direction === dir) return;
     this.direction = dir;
-    if (dir === "left") {
-      // Mirror the sprite horizontally
-      mirrorSprite(this.sprite);
+    if (dir === "left" && PLAYER_LEFT.mirrored) {
+      // Mirror the sprite horizontally using the shared helper
+      mirror(this.sprite);
     } else {
       // Reset to normal orientation
       this.sprite.setScale(1, 1);
