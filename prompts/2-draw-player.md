@@ -5,7 +5,7 @@ TODO list:
 
 - implement extractSprite function
 - add file for storing sprite constants (in this case PLAYER_RIGHT)
-- add a player actor
+- add a player actor with its main sprite being PLAYER_RIGHT with the coordinates [3, 37], [83, 144]
 - replace the red ball in the canvas with the player
 
 Acceptance criteria:
