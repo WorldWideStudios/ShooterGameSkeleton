@@ -1,6 +1,13 @@
 Using the image (assets/jules.png) as a spritesheet, replace the red ball with the character facing right. Ensure to use standard practices
 to grab the image with phaser, and be absolutely sure that it will display accurately.
 
+TODO list:
+
+- implement extractSprite function
+- add file for storing sprite constants (in this case PLAYER_RIGHT)
+- add a player actor
+- replace the red ball in the canvas with the player
+
 Acceptance criteria:
 
 1. A sprite system where we can provide an image and slice sections of the image to match a given sprite. In this case we should be able to add the top left and bottom right pixel locations in code and it extract the sprite from the sheet for us (in the case the player facing right has a top left of 3, 37 and a bottom right of 83, 144 where these represnt the x and y of the coordinate)
