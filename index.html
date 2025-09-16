@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MetroidVania POC</title>
+    <style>
+      body {
+        background: #fff;
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #game-canvas {
+        display: block;
+        margin: auto;
+        background: #000;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="game-root">
+      <!-- Phaser will inject the canvas here -->
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
