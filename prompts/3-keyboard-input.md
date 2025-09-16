@@ -3,8 +3,9 @@ right button the sprite changes to match the direction.
 
 TODO:
 
+- Reuse the existing PLAYER_RIGHT sprite
 - Create `mirror` function that accepts a phaser sprite and mirrors it horizontally
-- Add new sprite PLAYER_LEFT that mirrors PLAYER_RIGHT
+- Add new sprite PLAYER_LEFT that mirrors PLAYER_RIGHT in src/lib/sprites.ts
 - Add support for pressing left/right keys
 - Update the player actor to change sprite based on which key was last pressed
 
