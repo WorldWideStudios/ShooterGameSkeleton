@@ -2,6 +2,19 @@ import Phaser from "phaser";
 import { PLAYER_RIGHT } from "../lib/sprites";
 
 /**
+ * Mirrors a Phaser image horizontally.
+ *
+ * @param sprite - The Phaser GameObject to mirror
+ * @returns The mirrored Phaser GameObject
+ * @author GitHub Copilot
+ */
+export function mirrorSprite(sprite: Phaser.GameObjects.Image): Phaser.GameObjects.Image {
+  // Flip the sprite horizontally by setting scaleX to -1
+  sprite.setScale(-1, 1);
+  return sprite;
+}
+
+/**
  * Extracts a sprite from a spritesheet using Phaser's built-in methods.
  *
  * @param scene - The Phaser scene instance
