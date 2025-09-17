@@ -12,4 +12,6 @@ TODO:
 
 Acceptance Criteria:
 
-1. The player can jump and double jump with UP, landing reliably on the ground
+1. When pressing the up arrow key, the player sprite moves upward and then falls back down
+2. If the up arrow key is pressed a second time before falling, we move even further upward
+3. When the player falls, they land on the ground and don't fall below the lowest screen.
