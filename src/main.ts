@@ -81,33 +81,33 @@ class BallScene extends Phaser.Scene {
       // Store player for update loop
       this.player = player;
 
-        // Create a graphics layer for projectiles
-        this.projectilesGraphics = this.add.graphics();
+      // Create a graphics layer for projectiles
+      this.projectilesGraphics = this.add.graphics();
 
-        // Listen for player shoot events
-        this.events.on("player-shoot", (payload: any) => {
-          // Decide projectile velocity based on player's state
-          const speed = 6; // pixels per frame baseline at 60fps
-          let vx = 0;
-          let vy = 0;
-          if (payload.onGround) {
-            // horizontal shot in facing direction
-            vx = payload.facing === "right" ? speed : -speed;
-            vy = 0;
-          } else {
-            // upward shot while mid-air
-            vx = 0;
-            vy = -speed; // negative y moves up
-          }
+      // Listen for player shoot events
+      this.events.on("player-shoot", (payload: any) => {
+        // Decide projectile velocity based on player's state
+        const speed = 6; // pixels per frame baseline at 60fps
+        let vx = 0;
+        let vy = 0;
+        if (payload.onGround) {
+          // horizontal shot in facing direction
+          vx = payload.facing === "right" ? speed : -speed;
+          vy = 0;
+        } else {
+          // upward shot while mid-air
+          vx = 0;
+          vy = -speed; // negative y moves up
+        }
 
-          // The player's container origin is top-left; offset to approximate gun position
-    // Use a conservative offset to position the projectile near the player's center.
-    const px = payload.x + 16; // approximate half-width
-    const py = payload.y + 16; // approximate half-height
+        // The player's container origin is top-left; offset to approximate gun position
+        // Use a conservative offset to position the projectile near the player's center.
+        const px = payload.x + 16; // approximate half-width
+        const py = payload.y + 16; // approximate half-height
 
-          const proj = new Projectile(px, py, vx, vy);
-          this.projectiles.push(proj);
-        });
+        const proj = new Projectile(px, py, vx, vy);
+        this.projectiles.push(proj);
+      });
     });
   }
 
@@ -136,7 +136,12 @@ class BallScene extends Phaser.Scene {
         // Remove if outside camera world bounds (use scene dimensions as conservative bounds)
         const w = this.cameras.main.width;
         const h = this.cameras.main.height;
-        if (p.x < -50 || p.x > (this.cameras.main.worldView.right + 50) || p.y < -50 || p.y > (this.cameras.main.worldView.bottom + 50)) {
+        if (
+          p.x < -50 ||
+          p.x > this.cameras.main.worldView.right + 50 ||
+          p.y < -50 ||
+          p.y > this.cameras.main.worldView.bottom + 50
+        ) {
           this.projectiles.splice(i, 1);
           continue;
         }
