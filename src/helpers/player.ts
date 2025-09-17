@@ -8,6 +8,12 @@ import { extractSprite } from "./extractSprite";
  * @author GitHub Copilot
  */
 export class Player extends Phaser.GameObjects.Container {
+  // Expose common GameObject properties so TypeScript accepts direct access
+  public x!: number;
+  public y!: number;
+  public scene!: Phaser.Scene;
+  // Container.add exists on Phaser.Container; use definite assignment to satisfy TS
+  public add!: (...children: any[]) => this;
   /**
    * Creates the player actor and adds the sprite to the container.
    * @param scene - The Phaser scene instance
@@ -26,6 +32,18 @@ export class Player extends Phaser.GameObjects.Container {
    * Current horizontal velocity (pixels per frame).
    */
   private velocityX: number = 0;
+  /**
+   * Current vertical velocity (pixels per frame).
+   */
+  private velocityY: number = 0;
+  /**
+   * Gravity applied each frame (pixels per frame^2).
+   */
+  private readonly gravity: number = 0.6;
+  /**
+   * Whether the player is currently on the ground.
+   */
+  private onGround: boolean = false;
   /**
    * Maximum movement speed in pixels per frame.
    */
@@ -47,11 +65,25 @@ export class Player extends Phaser.GameObjects.Container {
     this.add(this.sprite);
     scene.add.existing(this);
 
+    // Position player at requested x and align to ground so initial position is bottom of canvas
+    const sceneHeight = (scene.game.config.height as number) || 400;
+    const worldBottom = this.worldBounds
+      ? this.worldBounds.bottom
+      : sceneHeight;
+    const spriteHeight = this.sprite.displayHeight || this.sprite.height || 32;
+    const maxY = worldBottom - spriteHeight;
+    // If provided y is below maxY (higher on screen), keep it; otherwise snap to ground
+    this.y = Math.min(y, maxY);
+    if (this.y >= maxY) {
+      this.onGround = true;
+      this.velocityY = 0;
+    }
+
     // Setup keyboard input for left/right
     // Feature detection for keyboard input
     if (scene.input && scene.input.keyboard) {
       const cursors = scene.input.keyboard.createCursorKeys();
-      // Handle keydown for movement
+      // Handle keydown for movement and jumping
       scene.input.keyboard.on("keydown", (event: KeyboardEvent) => {
         if (event.code === "ArrowLeft" || event.code === "KeyA") {
           this.setDirection("left");
@@ -59,9 +91,20 @@ export class Player extends Phaser.GameObjects.Container {
         } else if (event.code === "ArrowRight" || event.code === "KeyD") {
           this.setDirection("right");
           this.velocityX = this.maxSpeed;
+        } else if (event.code === "ArrowUp" || event.code === "Space") {
+          // Jump only if currently on the ground
+          if (this.onGround) {
+            // Compute jump velocity required to reach target height (1.5 * player height)
+            const height =
+              this.sprite.displayHeight || this.sprite.height || 32;
+            const target = 1.5 * height;
+            // Using v = sqrt(2 * g * h) but our gravity is per-frame; compute accordingly
+            this.velocityY = -Math.sqrt(2 * this.gravity * target);
+            this.onGround = false;
+          }
         }
       });
-      // Handle keyup to stop movement
+      // Handle keyup to stop horizontal movement
       scene.input.keyboard.on("keyup", (event: KeyboardEvent) => {
         if (
           event.code === "ArrowLeft" ||
@@ -73,7 +116,6 @@ export class Player extends Phaser.GameObjects.Container {
         }
       });
     } else {
-      // Log error if keyboard input is not available
       console.error("Phaser keyboard input not available in this scene.");
     }
   }
@@ -103,13 +145,29 @@ export class Player extends Phaser.GameObjects.Container {
   update(time: number, delta: number) {
     // Move horizontally by velocity
     this.x += this.velocityX;
-    // Clamp to world bounds if set
+    // Apply vertical physics
+    this.velocityY += this.gravity;
+    this.y += this.velocityY;
+
+    // Clamp to world bounds if set (horizontal)
     if (this.worldBounds) {
       this.x = Phaser.Math.Clamp(
         this.x,
         this.worldBounds.left,
         this.worldBounds.right
       );
+      // Ground is bottom of the visible camera (scene.game.config.height) or worldBounds bottom
+      const sceneHeight = (this.scene.game.config.height as number) || 400;
+      const groundY = this.worldBounds ? this.worldBounds.bottom : sceneHeight;
+      // Since sprite origin is 0,0 in extractSprite, player container's y represents top; adjust by sprite height
+      const spriteHeight =
+        this.sprite.displayHeight || this.sprite.height || 32;
+      const maxY = groundY - spriteHeight;
+      if (this.y >= maxY) {
+        this.y = maxY;
+        this.velocityY = 0;
+        this.onGround = true;
+      }
     }
   }
 }
