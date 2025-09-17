@@ -5,6 +5,8 @@
  */
 import Phaser from "phaser";
 
+import { Projectile } from "./helpers/projectile";
+
 /**
  * BallScene draws a centered red circle on a black canvas using Phaser.
  * @author GitHub Copilot
@@ -14,6 +16,10 @@ class BallScene extends Phaser.Scene {
    * Reference to the player actor instance.
    */
   player: any = null; // Will be set to Player after dynamic import
+  // List of active projectiles
+  projectiles: Projectile[] = [];
+  // Graphics layer used to draw simple primitives like projectiles
+  projectilesGraphics: Phaser.GameObjects.Graphics | null = null;
   constructor() {
     super("BallScene");
   }
@@ -74,6 +80,34 @@ class BallScene extends Phaser.Scene {
 
       // Store player for update loop
       this.player = player;
+
+        // Create a graphics layer for projectiles
+        this.projectilesGraphics = this.add.graphics();
+
+        // Listen for player shoot events
+        this.events.on("player-shoot", (payload: any) => {
+          // Decide projectile velocity based on player's state
+          const speed = 6; // pixels per frame baseline at 60fps
+          let vx = 0;
+          let vy = 0;
+          if (payload.onGround) {
+            // horizontal shot in facing direction
+            vx = payload.facing === "right" ? speed : -speed;
+            vy = 0;
+          } else {
+            // upward shot while mid-air
+            vx = 0;
+            vy = -speed; // negative y moves up
+          }
+
+          // The player's container origin is top-left; offset to approximate gun position
+    // Use a conservative offset to position the projectile near the player's center.
+    const px = payload.x + 16; // approximate half-width
+    const py = payload.y + 16; // approximate half-height
+
+          const proj = new Projectile(px, py, vx, vy);
+          this.projectiles.push(proj);
+        });
     });
   }
 
@@ -86,6 +120,31 @@ class BallScene extends Phaser.Scene {
     // Update player position if loaded
     if (this.player && typeof this.player.update === "function") {
       this.player.update(time, delta);
+    }
+
+    // Update projectiles
+    if (this.projectiles.length > 0) {
+      // Clear previous frame drawings
+      if (this.projectilesGraphics) {
+        this.projectilesGraphics.clear();
+      }
+
+      // Update each projectile and draw
+      for (let i = this.projectiles.length - 1; i >= 0; i--) {
+        const p = this.projectiles[i];
+        p.update(delta);
+        // Remove if outside camera world bounds (use scene dimensions as conservative bounds)
+        const w = this.cameras.main.width;
+        const h = this.cameras.main.height;
+        if (p.x < -50 || p.x > (this.cameras.main.worldView.right + 50) || p.y < -50 || p.y > (this.cameras.main.worldView.bottom + 50)) {
+          this.projectiles.splice(i, 1);
+          continue;
+        }
+        // Draw
+        this.projectilesGraphics?.save();
+        p.draw(this.projectilesGraphics!);
+        this.projectilesGraphics?.restore();
+      }
     }
   }
 }

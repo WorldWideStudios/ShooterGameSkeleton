@@ -91,7 +91,7 @@ export class Player extends Phaser.GameObjects.Container {
         } else if (event.code === "ArrowRight" || event.code === "KeyD") {
           this.setDirection("right");
           this.velocityX = this.maxSpeed;
-        } else if (event.code === "ArrowUp" || event.code === "Space") {
+        } else if (event.code === "ArrowUp" || event.code === "KeyW") {
           // Jump only if currently on the ground
           if (this.onGround) {
             // Compute jump velocity required to reach target height (1.5 * player height)
@@ -102,6 +102,20 @@ export class Player extends Phaser.GameObjects.Container {
             this.velocityY = -Math.sqrt(2 * this.gravity * target);
             this.onGround = false;
           }
+        } else if (event.code === "Space") {
+          // Emit a shoot event on the scene so the scene can spawn a projectile
+          // Provide current player world position and state via payload
+          const payload = {
+            x: this.x,
+            y: this.y,
+            facing: this.direction,
+            onGround: this.onGround,
+          };
+          // Use Phaser's event emitter available on the scene
+          (this.scene.events as Phaser.Events.EventEmitter).emit(
+            "player-shoot",
+            payload
+          );
         }
       });
       // Handle keyup to stop horizontal movement
