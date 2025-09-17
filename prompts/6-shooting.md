@@ -11,6 +11,6 @@ TODO:
 
 Acceptance Criteria:
 
-2. The player can shoot red balls with SPACE
-3. Ball direction depends on whether the player is standing or jumping
-4. Multiple balls can exist at once and move independently
+1. The player can shoot red balls with SPACE
+2. Ball direction depends on whether the player is standing or jumping
+3. Multiple balls can exist at once and move independently
