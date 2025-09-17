@@ -31,6 +31,9 @@ class BallScene extends Phaser.Scene {
   preload(): void {
     this.load.image("assets/jules.png", "assets/jules.png");
     this.load.image("background", "assets/background.png");
+    // Load audio assets for background music and shooting
+    this.load.audio("bg-music", "assets/background-music.mp3");
+    this.load.audio("shoot-sfx", "assets/shooting-sound.wav");
   }
 
   /**
@@ -81,11 +84,33 @@ class BallScene extends Phaser.Scene {
       // Store player for update loop
       this.player = player;
 
+      // Start background music looping and keep it across scene changes
+      try {
+        const bg = this.sound.add("bg-music", { loop: true, volume: 0.5 });
+        // Play if not already playing
+        if (!bg.isPlaying) {
+          bg.play();
+        }
+      } catch (e) {
+        // If audio subsystem isn't available, don't break the game
+        // eslint-disable-next-line no-console
+        console.warn("Background music failed to play:", e);
+      }
+
       // Create a graphics layer for projectiles
       this.projectilesGraphics = this.add.graphics();
 
       // Listen for player shoot events
       this.events.on("player-shoot", (payload: any) => {
+        // Play shooting sound for each shot fired
+        try {
+          const sfx = this.sound.add("shoot-sfx", { volume: 0.8 });
+          sfx.play();
+        } catch (e) {
+          // eslint-disable-next-line no-console
+          console.warn("Shoot SFX failed:", e);
+        }
+
         // Decide projectile velocity based on player's state
         const speed = 6; // pixels per frame baseline at 60fps
         let vx = 0;
